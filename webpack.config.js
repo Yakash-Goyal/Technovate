@@ -1,40 +1,28 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
 
 module.exports = {
-  entry: "./src/js/index.js",
-  output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "views"), 
-    clean: true, // Removes old files before building
-  },
-  mode: "development",
-  devServer: {
-    static: "./views", // Serve HTML from views folder
-    hot: true,
-    open: true,
-    port: 8080, // Ensure the correct port is used
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: [
-          MiniCssExtractPlugin.loader, 
-          "css-loader", 
-          "postcss-loader"
+    entry: './src/js/index.js', // Entry point where Webpack starts bundling
+    output: {
+        filename: 'bundle.js', // The output file after bundling
+        path: path.resolve(__dirname, 'src/dist'), // Output directory
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/, // Regex to test for JavaScript files
+                exclude: /node_modules/, // Don't transpile node_modules
+                use: {
+                    loader: 'babel-loader', // Transpile modern JavaScript to backward-compatible JavaScript
+                    options: {
+                        presets: ['@babel/preset-env'],
+                    },
+                },
+            },
         ],
-      },
-    ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./views/index.html",
-      inject: "body",
-    }),
-    new MiniCssExtractPlugin({ 
-      filename: "src/css/output.css" // Ensures correct CSS path
-    }),
-  ],
+    },
+    resolve: {
+        extensions: ['.js'], // Resolve JS extensions automatically
+    },
+    devtool: 'source-map', // Include source maps for easier debugging
+    mode: 'development', // Set mode to development (you can switch to 'production' for production build)
 };

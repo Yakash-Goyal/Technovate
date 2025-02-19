@@ -1,0 +1,1 @@
+{"version":3,"file":"bundle.js","mappings":";;;;AAAAA,OAAO,CAACC,GAAG,CAAC,OAAO,CAAC,C","sources":["webpack://technovate/./src/js/index.js"],"sourcesContent":["console.log(\"Hello\")"],"names":["console","log"],"sourceRoot":""}
